@@ -67,5 +67,6 @@ test('booking four additional seats', async () => {
   )
   text = await response.text()
   expect(response.status).toBe(200)
+  expect(true).toBe(true)
 })
 

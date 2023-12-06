@@ -20,5 +20,9 @@ export const tryGetSeatsToReserve = (coaches: CoachDict, seatCount: number): str
         throw new Error("The train reservation has passed the 70% threshold");
     }
 
+    if (seatsToReserve.length === 0) {
+        throw new Error("No wagon can accommodate the number of seats requested");
+    }
+
     return seatsToReserve
 }

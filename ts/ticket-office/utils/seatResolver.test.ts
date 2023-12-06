@@ -6,6 +6,7 @@ test('resolve available seats in the train', () => {
     const coach1Seats = ["1A", "1B"];
     const coach2Seats = ["2A", "2B", "2C", "2D", "2E"];
     const requestSeatCount = 2;
+    const expectedSeatCount = 2;
 
     const coachDictionary: CoachDict = {
         "1": { totalSeatCount: 10, availableSeats: coach1Seats },
@@ -14,13 +15,14 @@ test('resolve available seats in the train', () => {
 
     const seats = tryGetSeatsToReserve(coachDictionary, requestSeatCount);
 
-    expect(seats.length).toBe(requestSeatCount);
+    expect(seats.length).toBe(expectedSeatCount);
 });
 
 test('resolve available seats in the train when coach 1 does not have enough seats, but coach 2 has', () => {
     const coach1Seats = ["1A", "1B", "1C", "1D"];
     const coach2Seats = ["2A", "2B", "2C", "2D", "2E", "2F"];
     const requestSeatCount = 5
+    const expectedSeatCount = 5;
 
     const coachDictionary: CoachDict = {
         "1": { totalSeatCount: 5, availableSeats: coach1Seats },
@@ -29,7 +31,7 @@ test('resolve available seats in the train when coach 1 does not have enough sea
 
     const seats = tryGetSeatsToReserve(coachDictionary, requestSeatCount);
 
-    expect(seats.length).toBe(requestSeatCount);
+    expect(seats.length).toBe(expectedSeatCount);
     for (const seat of seats) {
         expect(coach2Seats).toContain(seat);
     }
@@ -39,6 +41,7 @@ test('resolve available seats in the train when coach 1 is more than 70% full, b
     const coach1Seats = ["1A"];
     const coach2Seats = ["2A", "2B", "2C", "2D", "2E", "2F"];
     const requestSeatCount = 1;
+    const expectedSeatCount = 1;
 
     const coachDictionary: CoachDict = {
         "1": { totalSeatCount: 6, availableSeats: coach1Seats },
@@ -47,7 +50,7 @@ test('resolve available seats in the train when coach 1 is more than 70% full, b
 
     const seats = tryGetSeatsToReserve(coachDictionary, requestSeatCount);
 
-    expect(seats.length).toBe(requestSeatCount);
+    expect(seats.length).toBe(expectedSeatCount);
     for (const seat of seats) {
         expect(coach2Seats).toContain(seat);
     }
@@ -73,7 +76,7 @@ test('resolve find no available seats in the train, when all coaches cannot acco
     const coach1Seats = ["1A", "1B", "1C", "1D", "1E", "1F", "1G"];
     const coach2Seats = ["2A", "2B", "2C", "2D", "2E", "2F", "2G"];
     const requestSeatCount = 8;
-    const expectedSeatCount = 0;
+    const expectedError = new Error("No wagon can accommodate the number of seats requested");
 
 
     const coachDictionary: CoachDict = {
@@ -81,7 +84,6 @@ test('resolve find no available seats in the train, when all coaches cannot acco
         "2": { totalSeatCount: 10, availableSeats: coach2Seats },
     }
 
-    const seats = tryGetSeatsToReserve(coachDictionary, requestSeatCount);
+    expect(() => tryGetSeatsToReserve(coachDictionary, requestSeatCount)).toThrow(expectedError);
 
-    expect(seats.length).toBe(expectedSeatCount);
 })

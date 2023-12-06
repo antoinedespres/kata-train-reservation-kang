@@ -1,6 +1,6 @@
 const config = {
   bookingReferenceAPIUrl: "http://localhost:8082/booking_reference",
-  traingDataAPIUrl: "http://localhost:8081/data_for_train"
+  trainDataAPIUrl: "http://localhost:8081"
 }
 
 export default config;
