@@ -1,9 +1,8 @@
 import express from 'express'
-import fetch from 'node-fetch'
 import morgan from 'morgan'
 
 import { book } from './services/booking-service';
-
+import { responseIsError } from './dto/response';
 
 const port = 8083
 
@@ -18,10 +17,9 @@ app.post("/reserve", async (req, res) => {
 
   const response = await book(trainId, seatCount);
 
-  console.log('Response ', response);
-
-
-  res.send(JSON.stringify(response));
+  res.contentType('application/json')
+    .status(responseIsError(response) ? response.code : 200)
+    .send(response);
 })
 
 

@@ -1,8 +1,8 @@
 import config from '../config';
 import { Seat } from '../types/seat';
-import { Coach, CoachDict } from '../types/coach';
+import { CoachDict } from '../types/coach';
 import { tryGetSeatsToReserve } from '../utils/seatsResolver';
-import { Response, BookingResponse, ErrorResponse } from '../dto/response';
+import { Response } from '../dto/response';
 
 
 export const book = async (trainId: string, seatCount: number): Promise<Response> => {
@@ -27,12 +27,10 @@ export const book = async (trainId: string, seatCount: number): Promise<Response
 
 
     const reservation = {
-        "booking_reference": bookingRef,
-        "seats": seats,
-        "train_id": trainId
+        booking_reference: bookingRef,
+        seats,
+        train_id: trainId
     };
-
-    console.log('Reservation ', reservation);
 
     const response = await fetch(`${config.trainDataAPIUrl}/reserve`, {
         method: 'POST',
@@ -40,11 +38,9 @@ export const book = async (trainId: string, seatCount: number): Promise<Response
         headers: { 'Content-Type': 'application/json' }
     });
 
-
     if (response.status === 500) {
         return { message: "Internal server error", code: 500 };
     }
-
     return reservation
 }
 
@@ -58,10 +54,8 @@ const getSeatsToReserve = async (trainId: string, seatCount: number): Promise<st
     const response = await fetch(`${config.trainDataAPIUrl}/data_for_train/${trainId}`)
     const train = await response.json()
     const seats = Object.values(train.seats) as Seat[]
-    console.log('Seats ', seats);
 
     const coaches: CoachDict = transformSeatsIntoCoachDictionnary(seats);
-    console.log('Coaches: ', coaches);
     const seatsToReserve = tryGetSeatsToReserve(coaches, seatCount)
 
     return seatsToReserve
@@ -74,7 +68,7 @@ const transformSeatsIntoCoachDictionnary = (seats: Seat[]): CoachDict => {
         }
         coaches[seat.coach].totalSeatCount++
         if (seat.booking_reference === '') {
-            coaches[seat.coach].availableSeats.push(seat.seat_number)
+            coaches[seat.coach].availableSeats.push(`${seat.seat_number}${seat.coach}`);
         }
         return coaches
     }, {})
