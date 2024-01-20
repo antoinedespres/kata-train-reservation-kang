@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "a3317253-18fc-40cb-a76e-aff5831730cc",
+		"name": "Booking Reference API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31635548",
+		"_collection_link": "https://kata-train-reservation-kang.postman.co/workspace/Team-Workspace~3cf468e2-e45c-4da3-8343-4289d8f42638/collection/31635548-a3317253-18fc-40cb-a76e-aff5831730cc?action=share&source=collection_link&creator=31635548"
+	},
+	"item": [
+		{
+			"name": "New booking ref",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/booking_reference",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"booking_reference"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reserve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"train_id\": \"local_1000\",\r\n    \"count\": \"4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/reserve",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting train data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/data_for_train/local_1000",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"data_for_train",
+						"local_1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"train_id\": \"express_2000\",\r\n    \"seats\": [\r\n        \"1A\",\r\n        \"2A\"\r\n    ],\r\n    \"booking_reference\": \"abc123def\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/reserve",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RESET TRAIN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/reset/local_1000",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"reset",
+						"local_1000"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "8082",
+			"type": "string"
+		}
+	]
+}
