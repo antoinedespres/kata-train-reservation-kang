@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "^4.22.0",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.2"
   },
